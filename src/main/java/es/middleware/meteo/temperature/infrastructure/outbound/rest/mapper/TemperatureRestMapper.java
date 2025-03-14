@@ -4,6 +4,7 @@ import es.middleware.meteo.temperature.domain.model.Temperature;
 import es.middleware.meteo.temperature.infrastructure.outbound.rest.model.Forecast;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class TemperatureRestMapper {
 
@@ -13,6 +14,6 @@ public class TemperatureRestMapper {
                 forecast.getLongitude(),
                 forecast.getCurrent().getTemperature_2m(),
                 forecast.getCurrent_units().getTemperature_2m(),
-                LocalDateTime.now());
+                LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS));
     }
 }
