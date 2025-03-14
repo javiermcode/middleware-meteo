@@ -1,4 +1,4 @@
-package es.middleware.meteo.temperature.application.output.port.output;
+package es.middleware.meteo.temperature.application.port.output;
 
 import es.middleware.meteo.temperature.domain.model.Temperature;
 

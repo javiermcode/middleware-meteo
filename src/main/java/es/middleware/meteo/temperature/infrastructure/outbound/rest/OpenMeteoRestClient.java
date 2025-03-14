@@ -1,6 +1,6 @@
 package es.middleware.meteo.temperature.infrastructure.outbound.rest;
 
-import es.middleware.meteo.temperature.application.output.port.output.TemperatureProvider;
+import es.middleware.meteo.temperature.application.port.output.TemperatureProvider;
 import es.middleware.meteo.temperature.domain.model.Temperature;
 import es.middleware.meteo.temperature.infrastructure.outbound.rest.mapper.TemperatureRestMapper;
 import es.middleware.meteo.temperature.infrastructure.outbound.rest.model.Forecast;
