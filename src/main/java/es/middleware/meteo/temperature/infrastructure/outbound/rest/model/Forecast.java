@@ -1,10 +1,16 @@
 package es.middleware.meteo.temperature.infrastructure.outbound.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Forecast {
-    public double latitude;
-    public double longitude;
-    public CurrentUnits current_units;
-    public Current current;
+
+    private double latitude;
+    private double longitude;
+
+    @JsonProperty("current_units")
+    private CurrentUnits currentUnits;
+
+    private Current current;
 
     public double getLatitude() {
         return latitude;
@@ -22,12 +28,12 @@ public class Forecast {
         this.longitude = longitude;
     }
 
-    public CurrentUnits getCurrent_units() {
-        return current_units;
+    public CurrentUnits getCurrentUnits() {
+        return currentUnits;
     }
 
-    public void setCurrent_units(CurrentUnits current_units) {
-        this.current_units = current_units;
+    public void setCurrentUnits(CurrentUnits currentUnits) {
+        this.currentUnits = currentUnits;
     }
 
     public Current getCurrent() {

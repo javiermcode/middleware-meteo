@@ -6,6 +6,9 @@ import es.middleware.meteo.temperature.infrastructure.outbound.persistence.mongo
 
 public class TemperatureCacheMapper {
 
+    private TemperatureCacheMapper() {
+    }
+
     public static Temperature mapToDomain(TemperatureCache temperatureCache) {
 
         return new Temperature(temperatureCache.getLatitude(),

@@ -7,13 +7,15 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class TemperatureRestMapper {
+    private TemperatureRestMapper() {
+    }
 
     public static Temperature mapToDomain(Forecast forecast) {
 
         return new Temperature(forecast.getLatitude(),
                 forecast.getLongitude(),
-                forecast.getCurrent().getTemperature_2m(),
-                forecast.getCurrent_units().getTemperature_2m(),
+                forecast.getCurrent().getTemperature(),
+                forecast.getCurrentUnits().getTemperature(),
                 LocalDateTime.now().truncatedTo(ChronoUnit.MILLIS));
     }
 }

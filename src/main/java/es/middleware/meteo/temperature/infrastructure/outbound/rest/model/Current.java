@@ -1,15 +1,17 @@
 package es.middleware.meteo.temperature.infrastructure.outbound.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Current {
 
-    public double temperature_2m;
+    @JsonProperty("temperature_2m")
+    private double temperature;
 
-    public double getTemperature_2m() {
-        return temperature_2m;
+    public double getTemperature() {
+        return temperature;
     }
 
-    public void setTemperature_2m(double temperature_2m) {
-        this.temperature_2m = temperature_2m;
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
     }
-
 }

@@ -36,47 +36,23 @@ public class TemperatureCache {
                 return id;
         }
 
-        public void setId(TemperatureCacheId id) {
-                this.id = id;
-        }
-
         public double getLatitude() {
                 return latitude;
-        }
-
-        public void setLatitude(double latitude) {
-                this.latitude = latitude;
         }
 
         public double getLongitude() {
                 return longitude;
         }
 
-        public void setLongitude(double longitude) {
-                this.longitude = longitude;
-        }
-
         public double getTemperature() {
                 return temperature;
-        }
-
-        public void setTemperature(double temperature) {
-                this.temperature = temperature;
         }
 
         public String getTemperatureUnit() {
                 return temperatureUnit;
         }
 
-        public void setTemperatureUnit(String temperatureUnit) {
-                this.temperatureUnit = temperatureUnit;
-        }
-
         public LocalDateTime getCreatedAt() {
                 return createdAt;
-        }
-
-        public void setCreatedAt(LocalDateTime createdAt) {
-                this.createdAt = createdAt;
         }
 }
