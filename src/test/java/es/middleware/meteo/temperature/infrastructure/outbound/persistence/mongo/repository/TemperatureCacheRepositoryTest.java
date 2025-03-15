@@ -1,21 +1,22 @@
-package es.middleware.meteo.infrastructure.outbound.persistence.mongo.repository;
+package es.middleware.meteo.temperature.infrastructure.outbound.persistence.mongo.repository;
 
+import es.middleware.meteo.temperature.dataset.CurrentTemperatureServiceTestDataset;
 import es.middleware.meteo.temperature.domain.model.Temperature;
 import es.middleware.meteo.temperature.infrastructure.outbound.persistence.mongo.mapper.TemperatureCacheMapper;
 import es.middleware.meteo.temperature.infrastructure.outbound.persistence.mongo.model.TemperatureCacheId;
-import es.middleware.meteo.temperature.infrastructure.outbound.persistence.mongo.repository.TemperatureCacheMongoRepository;
-import es.middleware.meteo.temperature.infrastructure.outbound.persistence.mongo.repository.TemperatureCacheRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
+@TestPropertySource("/application-test.properties")
 @SpringBootTest
-public class TemperatureCacheRepositoryTest {
+class TemperatureCacheRepositoryTest {
 
     @Autowired
     TemperatureCacheRepository temperatureCacheRepository;
@@ -24,8 +25,8 @@ public class TemperatureCacheRepositoryTest {
     TemperatureCacheMongoRepository temperatureCacheMongoRepository;
 
     @Test
-    void findById() {
-        final var temperatureCacheSample = TemperatureCacheRepositoryTestDataset.temperatureCache.get(0);
+    void testFindCurrentTemperatureFromMongoCacheById() {
+        final var temperatureCacheSample = CurrentTemperatureServiceTestDataset.mockedCurrentTemperatureCache.get();
 
         final double latitudeKey = temperatureCacheSample.getId().getLatitude();
         final double longitudeKey = temperatureCacheSample.getId().getLongitude();
@@ -50,8 +51,8 @@ public class TemperatureCacheRepositoryTest {
     }
 
     @Test
-    void save() {
-        final var temperatureCacheSample = TemperatureCacheRepositoryTestDataset.temperatureCache.get(0);
+    void testSaveCurrentTemperatureInMongoCache() {
+        final var temperatureCacheSample = CurrentTemperatureServiceTestDataset.mockedCurrentTemperatureCache.get();
 
         final double latitudeKey = temperatureCacheSample.getId().getLatitude();
         final double longitudeKey = temperatureCacheSample.getId().getLongitude();
@@ -81,11 +82,13 @@ public class TemperatureCacheRepositoryTest {
         assertEquals(temperature, cachedTemperatureFromRepository.get().getTemperature());
         assertEquals(temperatureUnit, cachedTemperatureFromRepository.get().getTemperatureUnit());
         assertEquals(createdAt, cachedTemperatureFromRepository.get().getCreatedAt());
+
+        temperatureCacheMongoRepository.deleteById(new TemperatureCacheId(latitudeKey, longitudeKey));
     }
 
     @Test
-    void deleteById() {
-        final var temperatureCacheSample = TemperatureCacheRepositoryTestDataset.temperatureCache.get(0);
+    void testDeleteCurrentTemperatureFromMongoCacheById() {
+        final var temperatureCacheSample = CurrentTemperatureServiceTestDataset.mockedCurrentTemperatureCache.get();
 
         final double latitudeKey = temperatureCacheSample.getId().getLatitude();
         final double longitudeKey = temperatureCacheSample.getId().getLongitude();
@@ -95,7 +98,8 @@ public class TemperatureCacheRepositoryTest {
         final String temperatureUnit= temperatureCacheSample.getTemperatureUnit();
         final LocalDateTime createdAt = temperatureCacheSample.getCreatedAt();
 
-        temperatureCacheMongoRepository.save(TemperatureCacheMapper.mapToCache(latitudeKey, longitudeKey, new Temperature(latitude, longitude, temperature, temperatureUnit, createdAt)));
+        temperatureCacheMongoRepository.save(TemperatureCacheMapper.mapToCache(latitudeKey, longitudeKey,
+                new Temperature(latitude, longitude, temperature, temperatureUnit, createdAt)));
 
         temperatureCacheRepository.deleteById(latitudeKey, longitudeKey);
 
