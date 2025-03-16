@@ -1,7 +1,5 @@
 package es.middleware.meteo.temperature.infrastructure;
 
-import es.middleware.meteo.temperature.application.port.input.GetCurrentTemperatureCache;
-import es.middleware.meteo.temperature.application.port.input.SaveCurrentTemperature;
 import es.middleware.meteo.temperature.application.port.output.TemperatureProvider;
 import es.middleware.meteo.temperature.application.port.output.TemperatureRepository;
 import es.middleware.meteo.temperature.application.service.CurrentTemperatureCacheService;
@@ -24,10 +22,15 @@ public class BeanConfiguration {
     @Value("${temperature.provider.forecast}")
     private String temperatureProviderForecastURl;
 
+    @Value("${kafka.temperature.topic.name}")
+    private String temperatureKafkaTopicName;
+
 
     @Bean
     ConfigurationProperties configurationProperties() {
-        return new ConfigurationProperties(temperatureProviderForecastURl, mongoCacheTemperatureMaxMillis);
+        return new ConfigurationProperties(temperatureProviderForecastURl,
+                mongoCacheTemperatureMaxMillis,
+                temperatureKafkaTopicName);
     }
 
     @Bean
@@ -36,10 +39,8 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public CurrentTemperatureQueryService getCurrentTemperature(TemperatureProvider temperatureProvider,
-                                                       GetCurrentTemperatureCache getCurrentTemperatureCache,
-                                                       SaveCurrentTemperature saveCurrentTemperature) {
-        return new CurrentTemperatureQueryService(temperatureProvider, getCurrentTemperatureCache, saveCurrentTemperature);
+    public CurrentTemperatureQueryService getCurrentTemperature(TemperatureProvider temperatureProvider) {
+        return new CurrentTemperatureQueryService(temperatureProvider);
     }
 
     @Bean

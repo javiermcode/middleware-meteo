@@ -1,9 +1,7 @@
 package es.middleware.meteo.temperature.application.service;
 
-import es.middleware.meteo.temperature.application.port.input.SaveCurrentTemperature;
 import es.middleware.meteo.temperature.application.port.output.TemperatureProvider;
 import es.middleware.meteo.temperature.dataset.CurrentTemperatureServiceTestDataset;
-import es.middleware.meteo.temperature.application.port.input.GetCurrentTemperatureCache;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -20,64 +18,44 @@ import static org.mockito.Mockito.when;
 class CurrentTemperatureQueryServiceTest {
 
     @Mock
-    private SaveCurrentTemperature saveCurrentTemperature;
-
-    @Mock
     private TemperatureProvider temperatureProvider;
-
-    @Mock
-    private GetCurrentTemperatureCache getCurrentTemperatureCache;
 
     @InjectMocks
     private CurrentTemperatureQueryService currentTemperatureQueryService;
 
     @Test
-    void testGetCurrentTemperatureWhenInCache() {
+    void testGetCurrentTemperatureWhenExists() {
 
         final var coordinates = CurrentTemperatureServiceTestDataset.coordinates.get();
         final var mockedCurrentTemperature = CurrentTemperatureServiceTestDataset.mockedCurrentTemperature.get();
 
-        when(getCurrentTemperatureCache.getCurrentTemperatureFromCache(coordinates.latitude(), coordinates.longitude()))
+        when(temperatureProvider.getCurrentTemperature(coordinates.latitude(), coordinates.longitude()))
                 .thenReturn(Optional.ofNullable(mockedCurrentTemperature));
 
-        final var currentTemperatureFromCache = currentTemperatureQueryService.getCurrentTemperature(
+        final var currentTemperature= currentTemperatureQueryService.getCurrentTemperature(
                 coordinates.latitude(), coordinates.longitude());
 
-        assertTrue(currentTemperatureFromCache.isPresent());
-        assertEquals(mockedCurrentTemperature.getLatitude(), currentTemperatureFromCache.get().getLatitude());
-        assertEquals(mockedCurrentTemperature.getLongitude(), currentTemperatureFromCache.get().getLongitude());
-        assertEquals(mockedCurrentTemperature.getTemperature(), currentTemperatureFromCache.get().getTemperature());
-        assertEquals(mockedCurrentTemperature.getTemperatureUnit(), currentTemperatureFromCache.get().getTemperatureUnit());
-        assertEquals(mockedCurrentTemperature.getCreatedAt(), currentTemperatureFromCache.get().getCreatedAt());
+        assertTrue(currentTemperature.isPresent());
+        assertEquals(mockedCurrentTemperature.getLatitude(), currentTemperature.get().getLatitude());
+        assertEquals(mockedCurrentTemperature.getLongitude(), currentTemperature.get().getLongitude());
+        assertEquals(mockedCurrentTemperature.getTemperature(), currentTemperature.get().getTemperature());
+        assertEquals(mockedCurrentTemperature.getTemperatureUnit(), currentTemperature.get().getTemperatureUnit());
+        assertEquals(mockedCurrentTemperature.getCreatedAt(), currentTemperature.get().getCreatedAt());
 
     }
 
     @Test
-    void testGetCurrentTemperatureWhenNotInCache() {
+    void testGetCurrentTemperatureWhenNotExists() {
 
         final var coordinates = CurrentTemperatureServiceTestDataset.coordinates.get();
-        final var mockedCurrentTemperature = CurrentTemperatureServiceTestDataset.mockedCurrentTemperature.get();
-        final var mockedProviderTemperature = CurrentTemperatureServiceTestDataset.mockedProviderTemperature.get();
-
-        when(getCurrentTemperatureCache.getCurrentTemperatureFromCache(coordinates.latitude(), coordinates.longitude()))
-                .thenReturn(Optional.empty());
 
         when(temperatureProvider.getCurrentTemperature(coordinates.latitude(), coordinates.longitude()))
-                .thenReturn(Optional.ofNullable(mockedProviderTemperature));
+                .thenReturn(Optional.empty());
 
-        when(saveCurrentTemperature.saveCurrentTemperature(coordinates.latitude(), coordinates.longitude(), mockedCurrentTemperature))
-                .thenReturn(Optional.ofNullable(mockedCurrentTemperature));
-
-        final var currentTemperatureFromCache = currentTemperatureQueryService.getCurrentTemperature(
+        final var currentTemperature = currentTemperatureQueryService.getCurrentTemperature(
                 coordinates.latitude(), coordinates.longitude());
 
-        assertNotNull(currentTemperatureFromCache);
-        assertEquals(mockedCurrentTemperature.getLatitude(), mockedProviderTemperature.getLatitude());
-        assertEquals(mockedCurrentTemperature.getLongitude(), mockedProviderTemperature.getLongitude());
-        assertEquals(mockedCurrentTemperature.getTemperature(), mockedProviderTemperature.getTemperature());
-        assertEquals(mockedCurrentTemperature.getTemperatureUnit(), mockedProviderTemperature.getTemperatureUnit());
-        assertEquals(mockedCurrentTemperature.getCreatedAt(), mockedProviderTemperature.getCreatedAt());
-
+        assertTrue(currentTemperature.isEmpty());
     }
 
 }

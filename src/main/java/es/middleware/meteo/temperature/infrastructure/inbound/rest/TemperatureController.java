@@ -1,7 +1,6 @@
 package es.middleware.meteo.temperature.infrastructure.inbound.rest;
 
 import es.middleware.meteo.temperature.application.port.input.DeleteCurrentTemperature;
-import es.middleware.meteo.temperature.application.port.input.GetCurrentTemperatureCache;
 import es.middleware.meteo.temperature.application.service.CurrentTemperatureQueryService;
 import es.middleware.meteo.temperature.infrastructure.inbound.rest.mapper.TemperatureDtoMapper;
 import es.middleware.meteo.temperature.infrastructure.inbound.rest.model.TemperatureDto;
@@ -25,15 +24,11 @@ public class TemperatureController {
 
     private final CurrentTemperatureQueryService currentTemperatureQueryService;
 
-    private final GetCurrentTemperatureCache getCurrentTemperatureCache;
-
     private final DeleteCurrentTemperature deleteCurrentTemperature;
 
-    public TemperatureController(GetCurrentTemperatureCache getCurrentTemperatureCache,
-                                 DeleteCurrentTemperature deleteCurrentTemperature,
+    public TemperatureController(DeleteCurrentTemperature deleteCurrentTemperature,
                                  CurrentTemperatureQueryService currentTemperatureQueryService) {
         this.currentTemperatureQueryService = currentTemperatureQueryService;
-        this.getCurrentTemperatureCache = getCurrentTemperatureCache;
         this.deleteCurrentTemperature = deleteCurrentTemperature;
     }
 
@@ -51,9 +46,13 @@ public class TemperatureController {
     public ResponseEntity<TemperatureDto> getTemperature(@RequestParam @Min(-90) @Max(90) double latitude,
                                                          @RequestParam @Min(-180) @Max(180) double longitude) {
 
-        final var temperature = currentTemperatureQueryService.getCurrentTemperature(latitude, longitude);
+        final var currentTemperature = currentTemperatureQueryService.getCurrentTemperature(latitude, longitude);
 
-        return temperature.map(value -> ResponseEntity.status(HttpStatus.OK).body(TemperatureDtoMapper.mapToDto(value))).orElseGet(() -> ResponseEntity.notFound().build());
+        if(currentTemperature.isPresent()) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(TemperatureDtoMapper.mapToDto(currentTemperature));
+        }
+        return ResponseEntity.notFound().build();
 
     }
 
@@ -69,10 +68,7 @@ public class TemperatureController {
     public ResponseEntity<String> deleteTemperatureFromCache(@RequestParam @Min(-90) @Max(90) double latitude,
                                                          @RequestParam @Min(-180) @Max(180) double longitude) {
 
-        if(getCurrentTemperatureCache
-                .getCurrentTemperatureFromCacheIncludingExpired(latitude, longitude)
-                .isPresent()) {
-            deleteCurrentTemperature.deleteCurrentTemperature(latitude, longitude);
+        if(deleteCurrentTemperature.deleteCurrentTemperature(latitude, longitude).isPresent()){
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

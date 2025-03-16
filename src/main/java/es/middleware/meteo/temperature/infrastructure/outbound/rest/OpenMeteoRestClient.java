@@ -1,5 +1,6 @@
 package es.middleware.meteo.temperature.infrastructure.outbound.rest;
 
+import es.middleware.meteo.common.cache.ForecastCacheable;
 import es.middleware.meteo.temperature.application.port.output.TemperatureProvider;
 import es.middleware.meteo.temperature.domain.model.Temperature;
 import es.middleware.meteo.temperature.infrastructure.ConfigurationProperties;
@@ -22,6 +23,7 @@ public class OpenMeteoRestClient implements TemperatureProvider {
         this.configurationProperties = configurationProperties;
     }
 
+    @ForecastCacheable(value = "temperature")
     @Override
     public Optional<Temperature> getCurrentTemperature(Double latitude, Double longitude) {
 

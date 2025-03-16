@@ -1,6 +1,12 @@
 package es.middleware.meteo.temperature.application.port.input;
 
+import es.middleware.meteo.temperature.domain.model.Temperature;
+
+import java.util.Optional;
+
 public interface DeleteCurrentTemperature {
 
-    void deleteCurrentTemperature(double latitude, double longitude);
+    Optional<Temperature> deleteCurrentTemperature(double latitude, double longitude);
+
+    void deleteCurrentTemperatureById(double latitude, double longitude);
 }
