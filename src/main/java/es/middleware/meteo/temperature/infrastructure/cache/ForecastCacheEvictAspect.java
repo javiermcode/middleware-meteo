@@ -1,4 +1,4 @@
-package es.middleware.meteo.common.cache;
+package es.middleware.meteo.temperature.infrastructure.cache;
 
 import es.middleware.meteo.temperature.application.port.input.DeleteCurrentTemperature;
 import es.middleware.meteo.temperature.application.port.input.GetCurrentTemperatureCache;

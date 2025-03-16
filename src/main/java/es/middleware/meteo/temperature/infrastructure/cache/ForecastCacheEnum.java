@@ -1,4 +1,4 @@
-package es.middleware.meteo.common.cache;
+package es.middleware.meteo.temperature.infrastructure.cache;
 
 public enum ForecastCacheEnum {
     TEMPERATURE("temperature");

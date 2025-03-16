@@ -1,4 +1,4 @@
-package es.middleware.meteo.common.cache;
+package es.middleware.meteo.temperature.infrastructure.cache;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ForecastCacheEvict {
+public @interface ForecastCacheable {
     String value();
 }

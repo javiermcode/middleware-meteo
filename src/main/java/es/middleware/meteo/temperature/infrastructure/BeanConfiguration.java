@@ -6,6 +6,7 @@ import es.middleware.meteo.temperature.application.service.CurrentTemperatureCac
 import es.middleware.meteo.temperature.application.service.CurrentTemperatureDeleteService;
 import es.middleware.meteo.temperature.application.service.CurrentTemperatureQueryService;
 import es.middleware.meteo.temperature.application.service.CurrentTemperatureSaveService;
+import es.middleware.meteo.temperature.domain.model.configuration.ConfigurationProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

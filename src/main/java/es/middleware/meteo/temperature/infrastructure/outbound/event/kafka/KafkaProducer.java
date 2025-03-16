@@ -1,6 +1,6 @@
 package es.middleware.meteo.temperature.infrastructure.outbound.event.kafka;
 
-import es.middleware.meteo.temperature.infrastructure.ConfigurationProperties;
+import es.middleware.meteo.temperature.domain.model.configuration.ConfigurationProperties;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

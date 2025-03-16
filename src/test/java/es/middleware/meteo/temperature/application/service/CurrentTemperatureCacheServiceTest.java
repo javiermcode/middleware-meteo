@@ -2,7 +2,7 @@ package es.middleware.meteo.temperature.application.service;
 
 import es.middleware.meteo.temperature.application.port.output.TemperatureRepository;
 import es.middleware.meteo.temperature.dataset.CurrentTemperatureServiceTestDataset;
-import es.middleware.meteo.temperature.infrastructure.ConfigurationProperties;
+import es.middleware.meteo.temperature.domain.model.configuration.ConfigurationProperties;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

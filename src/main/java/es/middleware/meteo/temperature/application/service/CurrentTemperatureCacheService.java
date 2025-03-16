@@ -4,7 +4,7 @@ import es.middleware.meteo.common.util.TimeUtil;
 import es.middleware.meteo.temperature.application.port.input.GetCurrentTemperatureCache;
 import es.middleware.meteo.temperature.application.port.output.TemperatureRepository;
 import es.middleware.meteo.temperature.domain.model.Temperature;
-import es.middleware.meteo.temperature.infrastructure.ConfigurationProperties;
+import es.middleware.meteo.temperature.domain.model.configuration.ConfigurationProperties;
 
 import java.util.Optional;
 

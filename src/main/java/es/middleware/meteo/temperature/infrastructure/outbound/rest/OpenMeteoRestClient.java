@@ -1,9 +1,9 @@
 package es.middleware.meteo.temperature.infrastructure.outbound.rest;
 
-import es.middleware.meteo.common.cache.ForecastCacheable;
+import es.middleware.meteo.temperature.infrastructure.cache.ForecastCacheable;
 import es.middleware.meteo.temperature.application.port.output.TemperatureProvider;
 import es.middleware.meteo.temperature.domain.model.Temperature;
-import es.middleware.meteo.temperature.infrastructure.ConfigurationProperties;
+import es.middleware.meteo.temperature.domain.model.configuration.ConfigurationProperties;
 import es.middleware.meteo.temperature.infrastructure.outbound.rest.mapper.TemperatureRestMapper;
 import es.middleware.meteo.temperature.infrastructure.outbound.rest.model.Forecast;
 import org.springframework.stereotype.Component;
