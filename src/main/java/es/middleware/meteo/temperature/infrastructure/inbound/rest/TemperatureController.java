@@ -50,7 +50,7 @@ public class TemperatureController {
 
         if(currentTemperature.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(TemperatureDtoMapper.mapToDto(currentTemperature));
+                    .body(TemperatureDtoMapper.mapToDto(currentTemperature.get()));
         }
         return ResponseEntity.notFound().build();
 

@@ -9,9 +9,12 @@ public class TemperatureDtoMapper {
 
     public static TemperatureDto mapToDto(Temperature temperature) {
 
-        return new TemperatureDto(temperature.getLatitude(),
-                temperature.getLongitude(),
-                temperature.getTemperature(),
-                temperature.getTemperatureUnit());
+        if(temperature != null) {
+            return new TemperatureDto(temperature.getLatitude(),
+                    temperature.getLongitude(),
+                    temperature.getTemperature(),
+                    temperature.getTemperatureUnit());
+        }
+        return null;
     }
 }
