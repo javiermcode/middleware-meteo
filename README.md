@@ -61,6 +61,7 @@ JaCoCo plugin was added to generate the test coverage report.
 A Dockerfile has been included. It requires a mongodb running with the database and credentials specified in application.properties.
 
 ## Logging
+Logging aspect was created to trace the controller requests and responses.
 Logs are sent out to console and /var/log directory. It can be customized in application.properties 
 
 ## Improvement points
